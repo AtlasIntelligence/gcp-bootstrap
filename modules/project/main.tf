@@ -1,6 +1,6 @@
 resource "google_project" "this" {
   name       = var.project_name
-  org_id     = "52138697918"
+  org_id     = var.org_id
   project_id = var.project_id
 
   billing_account = var.billing_account
