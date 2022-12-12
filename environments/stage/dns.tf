@@ -5,7 +5,9 @@ module "dns-private-zone" {
   name       = "atlassource-com"
   domain     = "atlassource.com."
 
-  private_visibility_config_networks = []
+  private_visibility_config_networks = [
+    "10.10.10.0/24", "10.10.20.0/24", "10.10.30.0/24"
+  ]
 
   recordsets = [
     {
