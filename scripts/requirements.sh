@@ -118,7 +118,7 @@ function validate_git(){
         fi
     fi
 
-    if ! git config init.defaultBranch | grep "main" >/dev/null ; then
+    if ! git config --global init.defaultBranch | grep "main" >/dev/null ; then
         echo "  git default branch must be configured as main."
         echo "  See the instructions at https://github.com/terraform-google-modules/terraform-example-foundation/blob/master/docs/TROUBLESHOOTING.md#default-branch-setting ."
         ERRORS+=$'  git default branch must be configured as main.\n'
@@ -208,20 +208,20 @@ function check_billing_account_roles(){
 
 }
 
-# Checks if initial config was done for 0-bootstrap step
-function validate_bootstrap_step(){
-    SCRIPTS_DIR="$( dirname -- "$0"; )"
-    FILE="$SCRIPTS_DIR/../0-bootstrap/terraform.tfvars"
-    if [ ! -f "$FILE" ]; then
-        echo "  Rename the file 0-bootstrap/terraform.example.tfvars to 0-bootstrap/terraform.tfvars"
-        ERRORS+=$'  terraform.tfvars file must exist for 0-bootstrap step.\n'
-    else
-        if [ "$(grep -c REPLACE_ME "$FILE")" != 0 ]; then
-            echo "  0-bootstrap/terraform.tfvars must have required values fulfilled."
-            ERRORS+=$'  terraform.tfvars file must be correctly fulfilled for 0-bootstrap step.\n'
-        fi
-    fi
-}
+# # Checks if initial config was done for 0-bootstrap step
+# function validate_bootstrap_step(){
+#     SCRIPTS_DIR="$( dirname -- "$0"; )"
+#     FILE="$SCRIPTS_DIR/../0-bootstrap/terraform.tfvars"
+#     if [ ! -f "$FILE" ]; then
+#         echo "  Rename the file 0-bootstrap/terraform.example.tfvars to 0-bootstrap/terraform.tfvars"
+#         ERRORS+=$'  terraform.tfvars file must exist for 0-bootstrap step.\n'
+#     else
+#         if [ "$(grep -c REPLACE_ME "$FILE")" != 0 ]; then
+#             echo "  0-bootstrap/terraform.tfvars must have required values fulfilled."
+#             ERRORS+=$'  terraform.tfvars file must be correctly fulfilled for 0-bootstrap step.\n'
+#         fi
+#     fi
+# }
 
 # Echoes messages for cases where an installation is missing
 # $1 = name of the missing binary
@@ -282,8 +282,8 @@ function main(){
         fi
     fi
 
-    echo "Validating 0-bootstrap configuration..."
-    validate_bootstrap_step
+#     echo "Validating 0-bootstrap configuration..."
+#     validate_bootstrap_step
 
     echo "......................................."
     if [ -z "$ERRORS" ]; then

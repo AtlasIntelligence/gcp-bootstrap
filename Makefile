@@ -1,7 +1,9 @@
 .PHONY: start check-env prepare #clean init plan lint format apply check-security
 
 CURRENT_DIRECTORY := $(shell pwd)
-PROVIDE := $(END_USER_EMAIL) $(ORGANIZATION_ID) $(BILLING_ACCOUNT_ID)
+END_USER_EMAIL="yannicksiewe@ysi.guru"
+ORGANIZATION_ID="52138697918"
+BILLING_ACCOUNT_ID="01516F-1BC432-2A50DC"
 PROJECT := $(shell gcloud config get-value project)
 NOW := $(shell date +"%F")
 
@@ -10,8 +12,8 @@ OUT_DIR := scripts modules
 MKDIR_P = mkdir -p
 TF = terraform
 TF_DIR := environments
-ENV=""
-REGION=""
+ENV="stage"
+REGION="europe-west3"
 S3_BUCKET="gs://$(ENV)-tfstate-$(NOW)"
 
 BOLD=$(shell tput bold)
@@ -25,7 +27,7 @@ all:
 
 start: ## Validate requirements
 	@echo "Validate tools and requirements"
-	@sh scripts/requirements.sh $(PROVIDE)
+	@sh scripts/requirements.sh -o $(ORGANIZATION_ID) -b $(BILLING_ACCOUNT_ID) -u $(END_USER_EMAIL)
 
 directories: ${OUT_DIR} ## Create init directory
 ${OUT_DIR}:

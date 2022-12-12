@@ -19,17 +19,29 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
+      - name: Set Env
+        run: |
+          echo "Discovering the environment stage:"
+          if [[ ${{ github.ref == 'refs/heads/main' }} ]]; then
+            echo "TF_DIRECTORY=environments/prod" >> $GITHUB_ENV
+          else
+            echo "TF_DIRECTORY=environments/stage" >> $GITHUB_ENV
+          fi
+          echo "Environment stage is set:"
+          echo "${{ GITHUB_ENV }}"
+
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -chdir=$TF_DIRECTORY
         env:
           GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
 
-#      - name: Terraform plan
-#        run: terraform plan
-#        env:
-#          GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
-#
-#      - name: Terraform apply
-#        run: terraform apply -auto-approve
-#        env:
-#          GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
+      - name: Terraform plan
+        run: terraform plan -chdir=$TF_DIRECTORY
+        env:
+          GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
+
+      - name: Terraform apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve
+        env:
+          GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
