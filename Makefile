@@ -1,9 +1,6 @@
 .PHONY: start check-env prepare #clean init plan lint format apply check-security
 
 CURRENT_DIRECTORY := $(shell pwd)
-END_USER_EMAIL=""
-ORGANIZATION_ID=""
-BILLING_ACCOUNT_ID=""
 PROJECT := $(shell gcloud config get-value project)
 NOW := $(shell date +"%F")
 
@@ -12,7 +9,6 @@ OUT_DIR := scripts modules
 MKDIR_P = mkdir -p
 TF = terraform
 TF_DIR := environments
-ENV="stage"
 REGION="europe-west3"
 S3_BUCKET="gs://$(ENV)-tfstate-$(NOW)"
 
@@ -26,7 +22,20 @@ all:
 	@echo "All done"
 
 start: ## Validate requirements
-	@echo "Validate tools and requirements"
+	@echo "Validate requirements"
+	@if [ -z $(END_USER_EMAIL) ]; then \
+		echo "$(BOLD)$(RED)Variable END_USER_EMAIL required$(RESET)"; \
+		echo "$(BOLD)Example usage: \`$(YELLOW)END_USER_EMAIL="dummy@example.com"$(RESET) ORGANIZATION_ID="my_orga_id" BILLING_ACCOUNT_ID="my_billing_acc_id" make start\`$(RESET)"; \
+		exit 1; \
+	elif [ -z $(ORGANIZATION_ID) ]; then \
+		echo "$(BOLD)$(RED)Variable ORGANIZATION_ID required$(RESET)"; \
+		echo "$(BOLD)Example usage: \`END_USER_EMAIL="dummy@example.com" $(YELLOW)ORGANIZATION_ID="my_orga_id"$(RESET) BILLING_ACCOUNT_ID="my_billing_acc_id" make start\`$(RESET)"; \
+		exit 1; \
+	elif [ -z $(BILLING_ACCOUNT_ID) ]; then \
+		echo "$(BOLD)$(RED)Variable BILLING_ACCOUNT_ID required$(RESET)"; \
+		echo "$(BOLD)Example usage: \`END_USER_EMAIL="dummy@example.com" ORGANIZATION_ID="my_orga_id" $(YELLOW)BILLING_ACCOUNT_ID="my_billing_acc_id"$(RESET) make start\`$(RESET)"; \
+		exit 1; \
+	 fi
 	@sh scripts/requirements.sh -o $(ORGANIZATION_ID) -b $(BILLING_ACCOUNT_ID) -u $(END_USER_EMAIL)
 
 directories: ${OUT_DIR} ## Create init directory
@@ -47,7 +56,7 @@ check-env: ## Check Variables
 
 # Todo: change storageclass to nearline for cost optimisation
 # Todo: Enable encryption for bucket using --decryption-keys
-prepare: start check-env ## Prepare a new environment, configure the remote tfstate backend
+prepare: check-env ## Prepare a new environment, configure the remote tfstate backend
 	@echo "$(BOLD)Check that the S3 bucket $(S3_BUCKET) for remote state exists$(RESET)"
 	@if ! $(PROJECT) > /dev/null 2>&1 ; then \
 		echo "$(BOLD)You are connected using project $(GREEN)$(PROJECT)$(RESET)"; \
@@ -73,7 +82,7 @@ prepare: start check-env ## Prepare a new environment, configure the remote tfst
 clean: ## Clean the folder.
 	@cd "$(TF_DIR)"/$(ENV) && rm -fR .terraform*
 
-init:
+init: check-env
 	@cd "$(TF_DIR)"/$(ENV) && $(TF) init -reconfigure
 
 plan:
