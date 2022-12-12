@@ -2,7 +2,8 @@ name: 'Deploy to main'
 on:
   push:
     branches:
-      - main
+      - develop
+      #- main
 
 permissions:
   contents: read
@@ -23,12 +24,12 @@ jobs:
         env:
           GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
 
-      - name: Terraform plan
-        run: terraform plan
-        env:
-          GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
-
-      - name: Terraform apply
-        run: terraform apply -auto-approve
-        env:
-          GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
+#      - name: Terraform plan
+#        run: terraform plan
+#        env:
+#          GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
+#
+#      - name: Terraform apply
+#        run: terraform apply -auto-approve
+#        env:
+#          GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
