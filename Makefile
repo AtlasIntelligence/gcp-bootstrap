@@ -76,6 +76,9 @@ clean: ## Clean the folder.
 init:
 	@cd "$(TF_DIR)"/$(ENV) && $(TF) init -reconfigure
 
+plan:
+	@cd "$(TF_DIR)"/$(ENV) && $(TF) plan
+
 docs:
 	@cd "$(TF_DIR)"/$(ENV) && terraform-docs markdown table --output-file README.md --output-mode inject .
 
