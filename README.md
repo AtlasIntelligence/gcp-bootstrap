@@ -25,9 +25,11 @@ If the project has already been created and the terraform bucket is already crea
 
 ### [2 - Modules](./modules)
 This is a set of terraform configuration files, this structure is intended to make it easier to navigate, understand and update your configuration by grouping related parts of our configuration.
-each Sub-Directory consists of a resource that we use in our infrastructure, a resource that is a service or a set of services grouped together, such as vpc + subnets + route table.
+each Sub-Directory consists of a resource that we use in your infrastructure, a resource that is a service or a set of services grouped together, such as vpc + subnets + route table.
 
 - overview of the module structure
+
+for each Sub-module there is documentation written in the module readme
 ```
 gcp-bootstrap/
 └── modules
