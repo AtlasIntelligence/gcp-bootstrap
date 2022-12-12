@@ -4,6 +4,8 @@ on:
     branches:
       - develop
       #- main
+env:
+  TF_DIRECTORY: ${{ github.ref == 'refs/heads/main' && 'environments/prod' || 'environments/stage' }}
 
 permissions:
   contents: read
@@ -18,17 +20,9 @@ jobs:
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
-
-      - name: Set Env
         run: |
-          echo "Discovering the environment stage:"
-          if [[ ${{ github.ref == 'refs/heads/main' }} ]]; then
-            echo "TF_DIRECTORY=environments/prod" >> $GITHUB_ENV
-          else
-            echo "TF_DIRECTORY=environments/stage" >> $GITHUB_ENV
-          fi
-          echo "Environment stage is set:"
-          echo "${{ GITHUB_ENV }}"
+          echo "Working directory is:"
+          echo "$TF_DIRECTORY"
 
       - name: Terraform Init
         run: terraform init -chdir=$TF_DIRECTORY

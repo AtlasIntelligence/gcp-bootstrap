@@ -1,9 +1,9 @@
 .PHONY: start check-env prepare #clean init plan lint format apply check-security
 
 CURRENT_DIRECTORY := $(shell pwd)
-END_USER_EMAIL="yannicksiewe@ysi.guru"
-ORGANIZATION_ID="52138697918"
-BILLING_ACCOUNT_ID="01516F-1BC432-2A50DC"
+END_USER_EMAIL=""
+ORGANIZATION_ID=""
+BILLING_ACCOUNT_ID=""
 PROJECT := $(shell gcloud config get-value project)
 NOW := $(shell date +"%F")
 
