@@ -14,13 +14,13 @@ If the project has already been created and the terraform bucket is already crea
   - check the prerequiste
   ```bash
   END_USER_EMAIL=dummy@example.com ORGANIZATION_ID=my_orga_id BILLING_ACCOUNT_ID=my_billing_acc_id make start
-  - ```
+  ```
     this command checks if you have the necessary tools for the setup, then it connects to GCP and executes commands to check if the user has the necessary rights to execute the next steps
 
   - Set up a new stage
   ```bash
   ENV=stage Make prepare
-  - ```
+  ```
     this command checks if a bucket already exists for the Terraform remote backend and if it does not exist it creates it
 
 ### [2 - Modules](./modules)
