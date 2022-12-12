@@ -22,17 +22,17 @@ jobs:
         uses: hashicorp/setup-terraform@v1
 
       - name: Terraform Init
-        run: terraform init -chdir=$TF_DIRECTORY
+        run: terraform -chdir=$TF_DIRECTORY init
         env:
           GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
 
       - name: Terraform plan
-        run: terraform plan -chdir=$TF_DIRECTORY
+        run: terraform -chdir=$TF_DIRECTORY plan
         env:
           GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
 
       - name: Terraform apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve
+        run: terraform -chdir=$TF_DIRECTORY apply -auto-approve
         env:
           GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
