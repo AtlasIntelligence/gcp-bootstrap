@@ -41,9 +41,9 @@ resource "google_cloud_run_service" "this" {
   metadata {
     annotations = {
       "run.googleapis.com/ingress"            = "all"
-      "run.googleapis.com/cpu-throttling"     = false
-      "autoscaling.knative.dev/maxScale"      = 10
-      "autoscaling.knative.dev/minScale"      = 1
+      "autoscaling.knative.dev/metric"        = "cpu"
+      "autoscaling.knative.dev/max-scale"     = "100"
+      "autoscaling.knative.dev/min-scale"     = "1"
       "run.googleapis.com/client-name"        = "terraform"
     }
   }
