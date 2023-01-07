@@ -43,6 +43,8 @@ variable "gcp_service_list" {
     "compute.googleapis.com",
     "vpcaccess.googleapis.com",
     "dns.googleapis.com",
-    "containerregistry.googleapis.com"
+    "containerregistry.googleapis.com",
+    "cloudfunctions.googleapis.com",
+    "cloudbuild.googleapis.com"
   ]
 }
