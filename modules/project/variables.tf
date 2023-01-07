@@ -45,6 +45,8 @@ variable "gcp_service_list" {
     "dns.googleapis.com",
     "containerregistry.googleapis.com",
     "cloudfunctions.googleapis.com",
-    "cloudbuild.googleapis.com"
+    "cloudbuild.googleapis.com",
+    "artifactregistry.googleapis.com",
+    "eventarc.googleapis.com"
   ]
 }

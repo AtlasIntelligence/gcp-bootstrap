@@ -4,6 +4,8 @@ resource "google_storage_bucket_object" "archive_function" {
   name   = var.bucket_archive_name
   bucket = var.bucket_name
   source = var.local_path
+
+  content_type = "application/zip"
 }
 
 # Create new CloudFunction
