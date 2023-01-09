@@ -20,19 +20,24 @@ variable "function_description" {
 
 variable "function_memory" {
   type        = string
-  default     = 128
+  default     = "256M"
   description = "Memory (in MB), available to the function. Allowed values are: 128MB, 256MB, 512MB, 1024MB, and 2048MB"
 }
 
 variable "function_timeout" {
   type        = string
-  default     = 30
+  default     = 60
   description = "Timeout (in seconds) for the function. Default value is 60 seconds. Cannot be more than 540 seconds"
 }
 
 variable "function_entry_point" {
   type        = string
   description = "Name of a JavaScript function that will be executed when the Google Cloud Function is triggered"
+}
+
+variable "pubsub_trigger_topic" {
+  type        = string
+  description = "Name of the topic that triggers the execution of the function"
 }
 
 variable "security_level" {
