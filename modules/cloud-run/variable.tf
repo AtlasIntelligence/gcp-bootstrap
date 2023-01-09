@@ -1,5 +1,5 @@
 variable "region" {
-  default = "us-central1"
+  default = "europe-west3"
 }
 
 variable "project_id" {
