@@ -48,5 +48,7 @@ variable "gcp_service_list" {
     "cloudfunctions.googleapis.com",
     "cloudbuild.googleapis.com",
     "eventarc.googleapis.com",
+    "run.googleapis.com",
+    "cloudscheduler.googleapis.com",
   ]
 }
