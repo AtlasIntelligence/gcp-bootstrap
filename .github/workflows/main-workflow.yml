@@ -1,38 +1,38 @@
-name: 'Deploy to main'
-on:
-  push:
-    branches:
-      - develop
-      #- main
-env:
-  TF_DIRECTORY: ${{ github.ref == 'refs/heads/main' && 'environments/prod' || 'environments/stage' }}
-
-permissions:
-  contents: read
-
-jobs:
-  deploy_terraform:
-    name: Deploy project bootstrap
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v1
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
-
-      - name: Terraform Init
-        run: terraform -chdir=$TF_DIRECTORY init
-        env:
-          GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
-
-      - name: Terraform plan
-        run: terraform -chdir=$TF_DIRECTORY plan
-        env:
-          GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
-
-      - name: Terraform apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform -chdir=$TF_DIRECTORY apply -auto-approve
-        env:
-          GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
+#name: 'Deploy to main'
+#on:
+#  push:
+#    branches:
+#      - develop
+#      #- main
+#env:
+#  TF_DIRECTORY: ${{ github.ref == 'refs/heads/main' && 'environments/prod' || 'environments/stage' }}
+#
+#permissions:
+#  contents: read
+#
+#jobs:
+#  deploy_terraform:
+#    name: Deploy project bootstrap
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout Repo
+#        uses: actions/checkout@v1
+#
+#      - name: Setup Terraform
+#        uses: hashicorp/setup-terraform@v1
+#
+#      - name: Terraform Init
+#        run: terraform -chdir=$TF_DIRECTORY init
+#        env:
+#          GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
+#
+#      - name: Terraform plan
+#        run: terraform -chdir=$TF_DIRECTORY plan
+#        env:
+#          GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
+#
+#      - name: Terraform apply
+#        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+#        run: terraform -chdir=$TF_DIRECTORY apply -auto-approve
+#        env:
+#          GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
