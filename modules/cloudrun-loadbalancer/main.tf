@@ -25,7 +25,7 @@ module "lb-http" {
   project = lower(var.project_id)
 
   ssl                             = true
-  managed_ssl_certificate_domains = ["${lower(var.service_dns_prefix)}.${data.google_dns_managed_zone.dns_zone.dns_name}"]
+  managed_ssl_certificate_domains = [local.service_dns_record]
   https_redirect                  = true
   labels                          = var.labels
 
