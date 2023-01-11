@@ -14,3 +14,9 @@ variable "schedule" {
 variable "url" {
   description = "The url that must be called"
 }
+
+variable "isPaused" {
+  type        = bool
+  default     = false
+  description = "Sets the scheduler to active or paused"
+}
