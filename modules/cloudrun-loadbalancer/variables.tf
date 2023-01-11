@@ -11,6 +11,11 @@ variable "service_name" {
 variable "service_dns_prefix" {
   type        = string
   description = "The name of the service"
+
+  validation {
+    condition     = var.service_dns_prefix == "" || can(regex("^[0-9A-Za-z+=,.@_-]+$", var.service_dns_prefix))
+    error_message = "Must be valid DNS names is the var.service_name is not source."
+  }
 }
 
 variable "region" {

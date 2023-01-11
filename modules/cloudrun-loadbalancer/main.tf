@@ -1,3 +1,10 @@
+locals {
+  service_dns = "${lower(var.service_dns_prefix)}.${data.google_dns_managed_zone.dns_zone.dns_name}"
+  source_dns = data.google_dns_managed_zone.dns_zone.dns_name
+
+  service_dns_record = var.service_name == "source" && var.service_dns_prefix == "" ? local.source_dns : local.service_dns
+}
+
 data "google_dns_managed_zone" "dns_zone" {
   name =  var.dns_zone_name
 }
@@ -65,7 +72,7 @@ resource "google_compute_region_network_endpoint_group" "serverless_neg" {
 }
 
 resource "google_dns_record_set" "record_set" {
-  name = "${lower(var.service_dns_prefix)}.${data.google_dns_managed_zone.dns_zone.dns_name}"
+  name = local.service_dns_record
   type = "A"
   ttl  = 300
 
