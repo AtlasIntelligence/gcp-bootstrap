@@ -24,7 +24,7 @@ variable "http_method" {
 
 variable "headers" {
   type        = map(string)
-  default     = tomap({"User-Agent": "Google-Cloud-Scheduler"})
+  default     = {"User-Agent": "Google-Cloud-Scheduler"}
   description = "Headers that must be used for e.g. Authentication"
 }
 

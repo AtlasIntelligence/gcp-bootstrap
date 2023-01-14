@@ -13,6 +13,6 @@ resource "google_cloud_scheduler_job" "job" {
   http_target {
     http_method = var.http_method
     uri         = var.url
-    headers     = var.headers
+    headers     = tomap(var.headers)
   }
 }
