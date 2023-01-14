@@ -20,3 +20,8 @@ variable "isPaused" {
   default     = false
   description = "Sets the scheduler to active or paused"
 }
+
+variable "token_secret" {
+  type        = string
+  description = "The authorization bearer secret token"
+}
