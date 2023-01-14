@@ -36,15 +36,15 @@ resource "google_cloud_run_service" "this" {
         }
       }
     }
-  }
 
-  metadata {
-    annotations = {
-      "run.googleapis.com/ingress"            = "all"
-      "autoscaling.knative.dev/metric"        = "cpu"
-      "autoscaling.knative.dev/maxScale"      = "100"
-      "autoscaling.knative.dev/minScale"      = var.is_prod ? "1" : "0"
-      "run.googleapis.com/client-name"        = "terraform"
+    metadata {
+      annotations = {
+        "run.googleapis.com/ingress"            = "all"
+        "autoscaling.knative.dev/metric"        = "cpu"
+        "autoscaling.knative.dev/maxScale"      = "100"
+        "autoscaling.knative.dev/minScale"      = var.is_prod ? "1" : "0"
+        "run.googleapis.com/client-name"        = "terraform"
+      }
     }
   }
 
