@@ -42,8 +42,8 @@ resource "google_cloud_run_service" "this" {
     annotations = {
       "run.googleapis.com/ingress"            = "all"
       "autoscaling.knative.dev/metric"        = "cpu"
-      "autoscaling.knative.dev/max-scale"     = "100"
-      "autoscaling.knative.dev/min-scale"     = "1"
+      "autoscaling.knative.dev/maxScale"      = "100"
+      "autoscaling.knative.dev/minScale"      = var.is_prod ? "1" : "0"
       "run.googleapis.com/client-name"        = "terraform"
     }
   }

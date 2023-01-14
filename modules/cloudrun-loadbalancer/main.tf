@@ -17,6 +17,7 @@ module "cloudrun" {
   ports           = var.ports
   cpus            = var.container_cpu
   memory          = var.container_memory
+  is_prod         = var.is_prod
 }
 
 module "lb-http" {

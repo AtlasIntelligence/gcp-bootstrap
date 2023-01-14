@@ -72,3 +72,8 @@ variable "dns_zone_name" {
   type    = string
   default = "public-dns"
 }
+
+variable "is_prod" {
+  type    = bool
+  default = false
+}

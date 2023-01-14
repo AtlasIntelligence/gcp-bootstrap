@@ -69,3 +69,8 @@ variable volumes {
     condition = length(tolist(var.volumes.*.path)) == length(toset(var.volumes.*.path))
   }
 }
+
+variable "is_prod" {
+  type    = bool
+  default = false
+}
