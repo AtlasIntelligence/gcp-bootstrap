@@ -12,7 +12,20 @@ variable "schedule" {
 }
 
 variable "url" {
+  type        = string
   description = "The url that must be called"
+}
+
+variable "http_method" {
+  type        = string
+  default     = "POST"
+  description = "The HTTP method that must be used e.g. GET, POST"
+}
+
+variable "headers" {
+  type        = map(string)
+  default     = tomap({"User-Agent": "Google-Cloud-Scheduler"})
+  description = "Headers that must be used for e.g. Authentication"
 }
 
 variable "isPaused" {
