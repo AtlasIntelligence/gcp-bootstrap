@@ -6,3 +6,7 @@ output "url" {
 output "dns_zone" {
   value = data.google_dns_managed_zone.dns_zone.dns_name
 }
+
+output "cloud_run_service_account" {
+  value = module.cloudrun.service_account
+}
