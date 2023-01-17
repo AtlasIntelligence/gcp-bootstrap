@@ -9,5 +9,5 @@ output "name" {
 }
 
 output "service_account" {
-  value = google_cloud_run_service.this.template.spec.service_account_name
+  value = google_cloud_run_service.this.template[0].spec.service_account_name
 }
