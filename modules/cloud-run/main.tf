@@ -52,6 +52,8 @@ resource "google_cloud_run_service" "this" {
     percent         = 100
     latest_revision = true
   }
+
+  autogenerate_revision_name = true
 }
 
 data "google_iam_policy" "noauth" {
