@@ -7,3 +7,7 @@ output "url" {
 output "name" {
   value = google_cloud_run_service.this.name
 }
+
+output "service_account" {
+  value = google_cloud_run_service.this.template.spec.service_account_name
+}
