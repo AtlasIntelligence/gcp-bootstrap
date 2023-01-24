@@ -67,6 +67,18 @@ variable "backends" {
       oauth2_client_secret = string
     })
   }))
+
+  default = {}
+}
+
+variable "path_matcher" {
+  type = map(map(string))
+  default = {}
+}
+
+variable "path_rule" {
+  type = map(map(string))
+  default = {}
 }
 
 variable "create_url_map" {

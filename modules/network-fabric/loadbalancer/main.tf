@@ -6,6 +6,9 @@ locals {
   create_http_forward = var.http_forward || var.https_redirect
 
   health_checked_backends = {}
+
+  path_matcher = var.path_matcher
+  backend_rule = var.path_rule
 }
 
 ### IPv4 block ###
@@ -139,7 +142,35 @@ resource "google_compute_url_map" "default" {
   project         = var.project
   count           = var.create_url_map ? 1 : 0
   name            = "${var.name}-url-map"
+
   default_service = google_compute_backend_service.default[keys(var.backends)[0]].self_link
+
+  dynamic "host_rule" {
+    for_each = try(tomap(local.path_matcher), {})
+    iterator = host
+    content {
+      hosts        = [host.value.fqdn]
+      path_matcher = host.key
+    }
+  }
+
+  dynamic "path_matcher" {
+    for_each = try(tomap(local.path_matcher), {})
+    iterator = backend
+    content {
+      name            = format("%s", backend.key)
+      default_service = google_compute_backend_service.default[keys(var.backends)[0]].self_link
+
+      dynamic "path_rule" {
+        for_each = try(tomap(local.backend_rule), {})
+        iterator = rule
+        content {
+          service = google_compute_backend_service.default[rule.key].self_link
+          paths   = [rule.value.regex]
+        }
+      }
+    }
+  }
 }
 
 resource "google_compute_url_map" "https_redirect" {
@@ -155,7 +186,7 @@ resource "google_compute_url_map" "https_redirect" {
 
 resource "google_compute_backend_service" "default" {
   provider = google-beta
-  for_each = var.backends
+  for_each = tomap(var.backends)
 
   project = var.project
   name    = "${var.name}-backend-${each.key}"
@@ -197,6 +228,4 @@ resource "google_compute_backend_service" "default" {
       oauth2_client_secret = lookup(lookup(each.value, "iap_config", {}), "oauth2_client_secret", "")
     }
   }
-
-
 }

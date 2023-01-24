@@ -8,6 +8,7 @@ This module is meant for use with Terraform 0.12. If you haven't [upgraded](http
 
 Basic usage of this module for a private zone is as follows:
 
+Template to create a load balancer that routes traffic to one Cloud Run Service:
 ```hcl
 module "lb-http" {
   source            = "../../modules/"
@@ -39,6 +40,83 @@ module "lb-http" {
         }
       ]
 
+      iap_config = {
+        enable               = false
+        oauth2_client_id     = null
+        oauth2_client_secret = null
+      }
+    }
+  }
+}
+```
+
+Here is an example that can be used to create a load balancer that routes traffic to different Cloud Run services based on the requested path:
+```terraform
+locals {
+  path_matcher = {
+    allpaths = {
+      fqdn = "your-domain.com"
+    }
+  }
+  backends = {
+    foo = {
+      regex = "/foo/*"
+    }
+    bar = {
+      regex = "/bar/*"
+    }
+  }
+}
+module "lb-http" {
+  source            = "../../modules/"
+
+  project           = "my-project-id"
+  name              = "my-lb"
+
+  ssl                             = true
+  managed_ssl_certificate_domains = ["your-domain.com"]
+  https_redirect                  = true
+
+  path_matcher = local.path_matcher
+  path_rule = local.path_rule
+  
+  backends = {
+    foo = {
+      description                     = null
+      enable_cdn                      = false
+      custom_request_headers          = null
+      custom_response_headers         = null
+      security_policy                 = null
+      log_config = {
+        enable = true
+        sample_rate = 1.0
+      }
+      groups = [
+        {
+          group = google_compute_region_network_endpoint_group.default.id
+        }
+      ]
+      iap_config = {
+        enable               = false
+        oauth2_client_id     = null
+        oauth2_client_secret = null
+      }
+    }
+    bar = {
+      description                     = null
+      enable_cdn                      = false
+      custom_request_headers          = null
+      custom_response_headers         = null
+      security_policy                 = null
+      log_config = {
+        enable = true
+        sample_rate = 1.0
+      }
+      groups = [
+        {
+          group = google_compute_region_network_endpoint_group.default.id
+        }
+      ]
       iap_config = {
         enable               = false
         oauth2_client_id     = null
