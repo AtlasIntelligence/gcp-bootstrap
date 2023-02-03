@@ -17,8 +17,8 @@ resource "google_cloudfunctions2_function" "function" {
   labels      = var.labels
 
   build_config {
-    runtime = var.runtime
-    entry_point = var.function_entry_point
+    runtime               = var.runtime
+    entry_point           = var.function_entry_point
     environment_variables = var.environment
     source {
       storage_source {
@@ -29,17 +29,18 @@ resource "google_cloudfunctions2_function" "function" {
   }
 
   service_config {
-    max_instance_count  = 3
-    min_instance_count  = 1
-    available_memory    = var.function_memory
-    timeout_seconds     = var.function_timeout
-    environment_variables = var.environment
+    max_instance_count               = 5
+    min_instance_count               = 0
+    available_memory                 = var.function_memory
+    max_instance_request_concurrency = var.function_concurrency
+    timeout_seconds                  = var.function_timeout
+    environment_variables            = var.environment
   }
 
   event_trigger {
     trigger_region = "europe-west3"
-    event_type = "google.cloud.pubsub.topic.v1.messagePublished"
-    pubsub_topic = var.pubsub_trigger_topic
-    retry_policy = "RETRY_POLICY_RETRY"
+    event_type     = "google.cloud.pubsub.topic.v1.messagePublished"
+    pubsub_topic   = var.pubsub_trigger_topic
+    retry_policy   = "RETRY_POLICY_RETRY"
   }
 }

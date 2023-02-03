@@ -18,6 +18,12 @@ variable "function_description" {
   description = "Description of the function"
 }
 
+variable "function_concurrency" {
+  type        = string
+  default     = 10
+  description = "Sets the maximum number of concurrent requests that each instance can receive. Defaults to 1."
+}
+
 variable "function_memory" {
   type        = string
   default     = "256M"
@@ -26,7 +32,7 @@ variable "function_memory" {
 
 variable "function_timeout" {
   type        = string
-  default     = 60
+  default     = 120
   description = "Timeout (in seconds) for the function. Default value is 60 seconds. Cannot be more than 540 seconds"
 }
 
@@ -49,7 +55,7 @@ variable "security_level" {
 variable "environment" {
   type        = map(string)
   description = ""
-  default     = {
+  default = {
     MY_ENV_VAR = "my-env-var-value"
   }
 }
@@ -57,7 +63,7 @@ variable "environment" {
 variable "labels" {
   type        = map(string)
   description = ""
-  default     = {
+  default = {
     my-label = "my-label-value"
   }
 }
