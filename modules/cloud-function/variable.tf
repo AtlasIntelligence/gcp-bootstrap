@@ -20,7 +20,7 @@ variable "function_description" {
 
 variable "function_concurrency" {
   type        = string
-  default     = 10
+  default     = 100
   description = "Sets the maximum number of concurrent requests that each instance can receive. Defaults to 1."
 }
 
