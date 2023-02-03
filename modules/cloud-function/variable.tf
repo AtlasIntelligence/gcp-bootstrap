@@ -24,6 +24,12 @@ variable "function_concurrency" {
   description = "Sets the maximum number of concurrent requests that each instance can receive. Defaults to 1."
 }
 
+variable "function_cpu" {
+  type        = string
+  default     = "1"
+  description = "The number of CPUs used in a single container instance. Default value is calculated from available memory."
+}
+
 variable "function_memory" {
   type        = string
   default     = "256M"
@@ -31,7 +37,7 @@ variable "function_memory" {
 }
 
 variable "function_timeout" {
-  type        = string
+  type        = number
   default     = 120
   description = "Timeout (in seconds) for the function. Default value is 60 seconds. Cannot be more than 540 seconds"
 }
