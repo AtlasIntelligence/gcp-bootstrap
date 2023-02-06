@@ -38,7 +38,7 @@ variable "function_memory" {
 
 variable "function_timeout" {
   type        = number
-  default     = 120
+  default     = 300
   description = "Timeout (in seconds) for the function. Default value is 60 seconds. Cannot be more than 540 seconds"
 }
 
