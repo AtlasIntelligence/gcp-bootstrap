@@ -29,7 +29,7 @@ resource "google_cloudfunctions2_function" "function" {
   }
 
   service_config {
-    max_instance_count               = 50
+    max_instance_count               = 5
     min_instance_count               = 0
     available_memory                 = var.function_memory
     available_cpu                    = var.function_cpu

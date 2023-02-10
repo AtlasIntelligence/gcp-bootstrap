@@ -20,13 +20,12 @@ variable "function_description" {
 
 variable "function_concurrency" {
   type        = string
-  default     = 100
+  default     = 1
   description = "Sets the maximum number of concurrent requests that each instance can receive. Defaults to 1."
 }
 
 variable "function_cpu" {
   type        = string
-  default     = "1"
   description = "The number of CPUs used in a single container instance. Default value is calculated from available memory."
 }
 
