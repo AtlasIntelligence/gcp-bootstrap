@@ -24,11 +24,6 @@ variable "function_concurrency" {
   description = "Sets the maximum number of concurrent requests that each instance can receive. Defaults to 1."
 }
 
-variable "function_cpu" {
-  type        = string
-  description = "The number of CPUs used in a single container instance. Default value is calculated from available memory."
-}
-
 variable "function_memory" {
   type        = string
   default     = "256M"

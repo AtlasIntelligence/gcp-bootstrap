@@ -32,7 +32,6 @@ resource "google_cloudfunctions2_function" "function" {
     max_instance_count               = 5
     min_instance_count               = 0
     available_memory                 = var.function_memory
-    available_cpu                    = var.function_cpu
     max_instance_request_concurrency = var.function_concurrency
     timeout_seconds                  = var.function_timeout
     environment_variables            = var.environment
