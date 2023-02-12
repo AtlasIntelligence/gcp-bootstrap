@@ -76,6 +76,6 @@ variable "is_prod" {
 }
 
 variable "max_instances" {
-  type    = string
-  default = "5"
+  type    = number
+  default = 5
 }

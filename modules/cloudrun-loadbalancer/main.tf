@@ -1,12 +1,12 @@
 locals {
   service_dns = "${lower(var.service_dns_prefix)}.${data.google_dns_managed_zone.dns_zone.dns_name}"
-  source_dns = data.google_dns_managed_zone.dns_zone.dns_name
+  source_dns  = data.google_dns_managed_zone.dns_zone.dns_name
 
   service_dns_record = var.service_name == "source" && var.service_dns_prefix == "" ? local.source_dns : local.service_dns
 }
 
 data "google_dns_managed_zone" "dns_zone" {
-  name =  var.dns_zone_name
+  name = var.dns_zone_name
 }
 
 module "cloudrun" {
@@ -18,6 +18,7 @@ module "cloudrun" {
   cpus            = var.container_cpu
   memory          = var.container_memory
   is_prod         = var.is_prod
+  max_instances   = var.max_instances
 }
 
 module "lb-http" {
@@ -44,7 +45,7 @@ module "lb-http" {
       custom_request_headers  = null
       custom_response_headers = null
       # Had to set this since otherwise terraform complains --  possible values "AUTOMATIC", "DISABLED"
-      compression_mode        = "DISABLED"
+      compression_mode = "DISABLED"
 
       iap_config = {
         enable               = false

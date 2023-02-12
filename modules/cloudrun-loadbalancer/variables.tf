@@ -27,9 +27,9 @@ variable "region" {
 variable "ports" {
   description = "container ports configuration"
   type        = map(any)
-  default     = {
-    port      = "8080"
-    protocol  = "TCP"
+  default = {
+    port     = "8080"
+    protocol = "TCP"
   }
 }
 
@@ -39,13 +39,18 @@ variable "container_image" {
 }
 
 variable "container_cpu" {
-  type = number
+  type    = number
   default = 1
 }
 
 variable "container_memory" {
-  type = number
+  type    = number
   default = 512
+}
+
+variable "max_instances" {
+  type    = number
+  default = 5
 }
 
 variable "apps_env" {
