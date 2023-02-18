@@ -65,15 +65,12 @@ data "google_iam_policy" "noauth" {
   }
 }
 
-# resource "google_cloud_run_service_iam_policy" "noauth" {
-#   location = google_cloud_run_service.this.location
-#   project  = google_cloud_run_service.this.project
-#   service  = google_cloud_run_service.this.name
+resource "google_cloud_run_service_iam_policy" "noauth" {
+  location = google_cloud_run_service.this.location
+  project  = google_cloud_run_service.this.project
+  service  = google_cloud_run_service.this.name
 
-#   policy_data = data.google_iam_policy.noauth.policy_data
-#   depends_on = [
-#     google_cloud_run_service.this
-#   ]
-# }
+  policy_data = data.google_iam_policy.noauth.policy_data
+}
 
 
