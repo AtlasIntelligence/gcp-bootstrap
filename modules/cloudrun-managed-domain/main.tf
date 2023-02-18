@@ -31,6 +31,9 @@ resource "google_cloud_run_domain_mapping" "default" {
   spec {
     route_name = module.cloudrun.name
   }
+  depends_on = [
+    module.cloudrun
+  ]
 }
 
 resource "google_dns_record_set" "record_set" {
