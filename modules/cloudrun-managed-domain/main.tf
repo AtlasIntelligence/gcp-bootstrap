@@ -35,16 +35,16 @@ resource "google_cloud_run_domain_mapping" "default" {
   ]
 }
 
-# resource "google_dns_record_set" "record_set" {
-#   name = "${local.service_dns_record}."
-#   type = "CNAME"
-#   ttl  = 300
+resource "google_dns_record_set" "record_set" {
+  name = "${local.service_dns_record}."
+  type = "CNAME"
+  ttl  = 300
 
-#   managed_zone = data.google_dns_managed_zone.dns_zone.name
+  managed_zone = data.google_dns_managed_zone.dns_zone.name
 
-#   rrdatas = ["ghs.googlehosted.com."]
+  rrdatas = ["ghs.googlehosted.com."]
 
-#   depends_on = [
-#     google_cloud_run_domain_mapping.default
-#   ]
-# }
+  depends_on = [
+    google_cloud_run_domain_mapping.default
+  ]
+}
