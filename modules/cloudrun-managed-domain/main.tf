@@ -22,7 +22,8 @@ module "cloudrun" {
 }
 
 resource "google_cloud_run_domain_mapping" "default" {
-  name     = local.service_dns_record
+  # name     = local.service_dns_record
+  name     = "data-augmention.source.dev.atin.io"
   location = module.cloudrun.location
   metadata {
     namespace = var.project_id
