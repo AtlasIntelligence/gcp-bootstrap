@@ -39,7 +39,7 @@ resource "google_cloud_run_service" "this" {
 
     metadata {
       annotations = {
-        "run.googleapis.com/ingress"       = "all"
+        # "run.googleapis.com/ingress"       = "all"
         "autoscaling.knative.dev/metric"   = "cpu"
         "autoscaling.knative.dev/maxScale" = var.max_instances
         "autoscaling.knative.dev/minScale" = var.is_prod ? "1" : "0"
