@@ -33,7 +33,7 @@ resource "google_cloud_run_domain_mapping" "default" {
 }
 
 resource "google_dns_record_set" "record_set" {
-  name = "local.service_dns_record"
+  name = "${var.service_dns_prefix}."
   type = "CNAME"
   ttl  = 300
 
