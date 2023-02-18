@@ -72,7 +72,7 @@ resource "google_cloud_run_service_iam_policy" "noauth" {
 
   policy_data = data.google_iam_policy.noauth.policy_data
   depends_on = [
-    google_cloud_run_service.default
+    google_cloud_run_service.this
   ]
 }
 
