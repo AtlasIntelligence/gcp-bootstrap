@@ -12,7 +12,7 @@ resource "google_storage_bucket_object" "archive_function" {
 # https://www.terraform.io/docs/providers/google/r/cloudfunctions_function.html
 resource "google_cloudfunctions2_function" "function" {
   name        = var.function_name
-  location    = "europe-west3"
+  location    = "europe-west1"
   description = var.function_description
   labels      = var.labels
 
