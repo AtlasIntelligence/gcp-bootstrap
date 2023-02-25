@@ -29,7 +29,7 @@ resource "google_cloudfunctions2_function" "function" {
   }
 
   service_config {
-    max_instance_count               = 5
+    max_instance_count               = var.function_max_instances
     min_instance_count               = 0
     available_memory                 = var.function_memory
     max_instance_request_concurrency = var.function_concurrency

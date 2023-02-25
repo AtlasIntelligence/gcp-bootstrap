@@ -36,6 +36,12 @@ variable "function_timeout" {
   description = "Timeout (in seconds) for the function. Default value is 60 seconds. Cannot be more than 540 seconds"
 }
 
+variable "function_max_instances" {
+  type        = number
+  default     = 5
+  description = "Maximum number of instances"
+}
+
 variable "function_entry_point" {
   type        = string
   description = "Name of a JavaScript function that will be executed when the Google Cloud Function is triggered"
