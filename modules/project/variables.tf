@@ -42,6 +42,13 @@ variable "gcp_service_list" {
     "essentialcontacts.googleapis.com",
     "compute.googleapis.com",
     "vpcaccess.googleapis.com",
-    "dns.googleapis.com"
+    "dns.googleapis.com",
+    "containerregistry.googleapis.com",
+    "artifactregistry.googleapis.com",
+    "cloudfunctions.googleapis.com",
+    "cloudbuild.googleapis.com",
+    "eventarc.googleapis.com",
+    "run.googleapis.com",
+    "cloudscheduler.googleapis.com",
   ]
 }

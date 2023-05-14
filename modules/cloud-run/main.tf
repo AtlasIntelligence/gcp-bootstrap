@@ -1,7 +1,7 @@
 locals {
   env = toset([
-    for e in var.env: {
-      key = e.key
+    for e in var.env : {
+      key   = e.key
       value = e.value
     }
   ])
@@ -20,7 +20,7 @@ resource "google_cloud_run_service" "this" {
         ports {
           container_port = var.ports.port
         }
-        dynamic env {
+        dynamic "env" {
           for_each = [for e in local.env : e if e.value != null]
 
           content {
@@ -36,15 +36,15 @@ resource "google_cloud_run_service" "this" {
         }
       }
     }
-  }
 
-  metadata {
-    annotations = {
-      "run.googleapis.com/ingress"            = "all"
-      "run.googleapis.com/cpu-throttling"     = false
-      "autoscaling.knative.dev/maxScale"      = 10
-      "autoscaling.knative.dev/minScale"      = 1
-      "run.googleapis.com/client-name"        = "terraform"
+    metadata {
+      annotations = {
+        # "run.googleapis.com/ingress"       = "all"
+        "autoscaling.knative.dev/metric"   = "cpu"
+        "autoscaling.knative.dev/maxScale" = var.max_instances
+        "autoscaling.knative.dev/minScale" = var.is_prod ? "1" : "0"
+        "run.googleapis.com/client-name"   = "terraform"
+      }
     }
   }
 
@@ -52,6 +52,8 @@ resource "google_cloud_run_service" "this" {
     percent         = 100
     latest_revision = true
   }
+
+  autogenerate_revision_name = true
 }
 
 data "google_iam_policy" "noauth" {
@@ -64,9 +66,9 @@ data "google_iam_policy" "noauth" {
 }
 
 resource "google_cloud_run_service_iam_policy" "noauth" {
-  location    = google_cloud_run_service.this.location
-  project     = google_cloud_run_service.this.project
-  service     = google_cloud_run_service.this.name
+  location = google_cloud_run_service.this.location
+  project  = google_cloud_run_service.this.project
+  service  = google_cloud_run_service.this.name
 
   policy_data = data.google_iam_policy.noauth.policy_data
 }

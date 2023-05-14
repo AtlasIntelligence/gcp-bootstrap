@@ -18,21 +18,38 @@ variable "function_description" {
   description = "Description of the function"
 }
 
+variable "function_concurrency" {
+  type        = string
+  default     = 1
+  description = "Sets the maximum number of concurrent requests that each instance can receive. Defaults to 1."
+}
+
 variable "function_memory" {
   type        = string
-  default     = 128
+  default     = "256M"
   description = "Memory (in MB), available to the function. Allowed values are: 128MB, 256MB, 512MB, 1024MB, and 2048MB"
 }
 
 variable "function_timeout" {
-  type        = string
-  default     = 30
+  type        = number
+  default     = 300
   description = "Timeout (in seconds) for the function. Default value is 60 seconds. Cannot be more than 540 seconds"
+}
+
+variable "function_max_instances" {
+  type        = number
+  default     = 5
+  description = "Maximum number of instances"
 }
 
 variable "function_entry_point" {
   type        = string
   description = "Name of a JavaScript function that will be executed when the Google Cloud Function is triggered"
+}
+
+variable "pubsub_trigger_topic" {
+  type        = string
+  description = "Name of the topic that triggers the execution of the function"
 }
 
 variable "security_level" {
@@ -44,7 +61,7 @@ variable "security_level" {
 variable "environment" {
   type        = map(string)
   description = ""
-  default     = {
+  default = {
     MY_ENV_VAR = "my-env-var-value"
   }
 }
@@ -52,7 +69,7 @@ variable "environment" {
 variable "labels" {
   type        = map(string)
   description = ""
-  default     = {
+  default = {
     my-label = "my-label-value"
   }
 }
