@@ -3,7 +3,7 @@ resource "google_cloud_scheduler_job" "job" {
   description      = var.description
   schedule         = var.schedule
   time_zone        = "Etc/UTC"
-  attempt_deadline = "320s"
+  attempt_deadline = var.attempt_deadline
   paused           = var.isPaused
 
   retry_config {
