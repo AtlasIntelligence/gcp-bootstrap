@@ -35,6 +35,8 @@ resource "google_cloud_run_service" "this" {
           }
         }
       }
+
+      timeout_seconds = var.timeout_seconds
     }
 
     metadata {
