@@ -24,7 +24,7 @@ variable "http_method" {
 
 variable "headers" {
   type        = map(string)
-  default     = {"User-Agent": "Google-Cloud-Scheduler"}
+  default     = { "User-Agent" : "Google-Cloud-Scheduler" }
   description = "Headers that must be used for e.g. Authentication"
 }
 
@@ -32,4 +32,10 @@ variable "isPaused" {
   type        = bool
   default     = false
   description = "Sets the scheduler to active or paused"
+}
+
+variable "attempt_deadline" {
+  type        = string
+  default     = "320s"
+  description = "The maximum amount of time to allow for a job execution"
 }

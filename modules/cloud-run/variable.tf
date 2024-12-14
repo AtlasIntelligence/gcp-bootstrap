@@ -79,3 +79,8 @@ variable "max_instances" {
   type    = number
   default = 5
 }
+
+variable "timeout_seconds" {
+  type    = number
+  default = 300
+}
